@@ -130,10 +130,11 @@ card_suit <- c("clubs", "diamonds", "hearts", "spades")
 card_number <- c("ace", 2:10, "jack", "queen", "king")
 ite <- expand_grid(Dice = dice, 
                    Card_suit = 1:length(card_suit), 
-                   Card_number=1:length(card_number))  
-for (r in 1:nrow(ite)) { # iterate over rows
-  cat("Dice = ", ite$Dice[r], " and card = ", card_suit[ite$Card_suit[r]], " (", card_number[ite$Card_number[r]], ").\n", sep="")
+                   Card_number = 1:length(card_number))  
+for (r in 1:nrow(ite)) { # Iterate over rows
+  cat("Dice = ", ite$Dice[r], " and card = ", card_suit[ite$Card_suit[r]], " (", card_number[ite$Card_number[r]], ").\n", sep = "")
 }
+
 
 
 #Exercise from lecture: Rolling a dice - a different approach
@@ -158,4 +159,6 @@ for (d in dice) {
     }
   }
 }
+
+
 
