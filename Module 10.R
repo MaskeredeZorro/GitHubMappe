@@ -13,14 +13,15 @@ loop_output <- function(dat, rows = 1:2, cols = 2:3, ...) {
 ## ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 library(tidyverse)
 
-#' Loop through some values in a data frame
+
+#' Title
 #'
-#' @param dat A data frame.
-#' @param rows Rows to loop through.
-#' @param cols Columns to loop through.
-#' @param ... Arguments passed to `cat`.
+#' @param dat A data frame
+#' @param rows Rows to loop through
+#' @param cols Columns to loop through
+#' @param ... Arguments passed to 'cat'
 #'
-#' @return A string.
+#' @return A string
 loop_output <- function(dat, rows = 1:2, cols = 2:3, ...) {
   ite <- expand_grid(r = rows, c = cols)
   for (i in 1:nrow(ite)) {
@@ -42,16 +43,28 @@ loop_output(mtcars, rows = c(3,1), cols = 6, sep = "")  # use the ... argument
 # strings in the form Dice = [value] and card = [value]. Moreover, if the dice
 # numbers contains the number 2, function must return true; otherwise, false.
 
+#' Combinations of dice and card
+#'
+#' @param dice Dice numbers
+#' @param card Cards used
+#'
+#' @return TRUE if dice contains a 2; FALSE otherwise
 get_combinations <- function(dice, card) {
-  ite <- expand_grid(___)
+  ite <- expand_grid(d = dice, c = card)
   found <- FALSE
   for (i in 1:nrow(ite)) {
-    ___
+    d <- ite$d[i]
+    c <- ite$c[i]
+    cat ("Dice = ", d, " and Card = ", c, ".\n", sep="")
+    if (d==2) found = TRUE
   } 
   return(found)
 }
 get_combinations(dice = c(2,3), card = c("2-spade", "ace-dimond"))
 get_combinations(dice = c(3,1), card = c("10-heart", "king-dimond"))
+
+
+#You can make your own package and attach documentation to it by using the exoskeleton.
 
 
 ## ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -69,13 +82,14 @@ get_combinations(dice = c(3,1), card = c("10-heart", "king-dimond"))
 #' @param rond TRUE if round the output to 2 decimals.
 #'
 #' @return Present value
-get_PV <- function(FV, ___) {
-  ___
+get_PV <- function(FV, r=0.1, n, round = FALSE) {
+  if (round == TRUE) {
+    round(FV/(1+r)^n, 2)}
+  else FV/(1+r)^n
 }
 get_PV(100, n = 7)
 get_PV(100, n = 7, round = TRUE)
 res <- get_PV(100, n = 7, r = 0.5)
-
-
+res
 
 
