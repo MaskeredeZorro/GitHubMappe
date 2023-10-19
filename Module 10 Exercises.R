@@ -95,7 +95,7 @@ costs(450)
 euclidean <- function(p1, p2, q1, q2) {
   return(sqrt((p1-q1)^2+(p2-q2)^2))
 }
-euclidean(0,10,7,16)
+euclidean(10,10,4,3) #write in pairs coordinates
 
 
 #Exercise 10.8.2 Spørgsmål 2:
@@ -124,8 +124,6 @@ calc_distances <- function(p_mat, from = 1:nrow(p_mat), to = 1:nrow(p_mat)) {
   for (r in 1:nrow(ite)) {
     i <- ite$from[r]
     j <- ite$to[r]
-    if (!is.na(d_mat[i,j])) next          # value already calculated 
-    if (i==j) {d_mat[i,j] <- 0; next}
     d_mat[i,j] <- sqrt((p_mat[i,1] - p_mat[j,1])^2 + (p_mat[i,2] - p_mat[j,2])^2)
   }
   return(d_mat)
@@ -133,3 +131,4 @@ calc_distances <- function(p_mat, from = 1:nrow(p_mat), to = 1:nrow(p_mat)) {
 p_mat <- matrix(c(10, 9, 15, 15, 11, 19, 12, 11, 7, 15), nrow = 5)
 calc_distances(p_mat)
 calc_distances(p_mat, to = 3:4)
+
