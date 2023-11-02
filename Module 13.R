@@ -272,8 +272,9 @@ hotels %>% select(contains("date"))
     select(adults, babies, children)
   ```
   
-  Bookings with no adults and some children or babies in the room:
-    
+#  Bookings with no adults and some children or babies in the room:
+hotels
+library(tidyverse)
     ```{r}
   
   hotels %>%
@@ -308,7 +309,7 @@ How many bookings involve at least 1 child **or** baby?
  hotels %>%
    filter(
      hotel == "Resort Hotel",
-     children >= 1 | babies >= 1
+     #children >= 1 | babies >= 1
      )
 ```
 
