@@ -255,12 +255,20 @@ Data %>%
   mutate(rate=n/sum(n))
 
 
-#Hvor mange overlevede på 1st class
+#Hvor mange overlevede i life boat
+Data
+
 Data %>% 
-  group_by(pclass, survived) %>% 
-  count() %>% 
-  group_by(pclass) %>% 
-  mutate(rate=n/sum(n))
+  filter(!is.na(boat)) %>% 
+  summarise(rate=1-sum(survived)/n())
+  print()
+  
+  
+#How many persons with Hansen in their name survived?
+  Data %>% 
+  filter(str_detect(name, "Hansen"))
+    
+    
   
 ```
 
