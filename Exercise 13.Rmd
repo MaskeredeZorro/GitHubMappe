@@ -272,6 +272,58 @@ Data %>%
   
 ```
 
+```{r}
+library(skimr)
+library(tidyverse)
+path <- system.file("extdata/profit_raw.csv", package = "tfa")
+profit <- read_csv(path)
+skim(profit)
+profit %>% distinct(Quarter)
+
+profit <- profit %>%  
+  mutate(Quarter = str_remove(Quarter, "q") %>% str_remove("Q") %>% as.numeric())
+profit %>% distinct(Quarter)
+
+
+
+profit
+
+profit <- profit %>% 
+  mutate(Revenue = str_replace_all(Revenue, c("unknown" = "?", "Unknown" = "?"))) %>% 
+  mutate(Revenue = na_if(Revenue, "?")) %>% 
+  mutate(Revenue = str_remove(Revenue, fixed("$ ")) %>% as.numeric())
+
+profit <- profit %>% 
+  mutate(`Product Cost` = str_replace_all(`Product Cost`, c("unknown" = "?", "Unknown" = "?"))) %>% 
+  mutate(`Product Cost` = na_if(`Product Cost`, "?")) %>% 
+  mutate(`Product Cost` = str_remove(`Product Cost`, fixed("$ ")) %>% as.numeric())
+
+profit <- profit %>% 
+  mutate(`Customer Service Cost` = str_replace_all(`Customer Service Cost`, c("unknown" = "?", "Unknown" = "?"))) %>% 
+  mutate(`Customer Service Cost` = na_if(`Customer Service Cost`, "?")) %>% 
+  mutate(`Customer Service Cost` = str_remove(`Customer Service Cost`, fixed("$ ")) %>% as.numeric())
+
+profit <- profit %>% 
+  mutate(Profit = str_replace_all(Profit, c("unknown" = "?", "Unknown" = "?"))) %>% 
+  mutate(Profit = na_if(Profit, "?")) %>% 
+  mutate(Profit = str_remove(Profit, fixed("$ ")) %>% as.numeric())
+
+profit %>% distinct(Profit)
+profit
+
+profit <- profit %>% 
+  mutate(across(Revenue:Profit, ~str_replace_all(.x,c("unknown" = "?", "Unknown" = "?")))) %>%  #Her bruges .x for at vælge hver element i across funktionen. Altså, .x = Revenue og dernæst... ... Profit.
+  mutate(across(Revenue:Profit, ~na_if(.x, "?"))) %>%
+  mutate(across(Revenue:Profit, ~str_remove(.x, fixed("$ ")) %>% as.numeric()))
+
+
+profit
+
+
+```
+
+
+
 
 ## Colophon 
 <!-- Always keep this section for reproducibility -->
