@@ -311,7 +311,10 @@ profit <- profit %>%
 profit %>% distinct(Profit)
 profit
 
+#Make use of across function, str_remove and mutate
+
 profit <- profit %>% 
+  mutate(Quarter = str_remove(Quarter, "q") %>% str_remove("Q") %>% as.numeric()) %>% 
   mutate(across(Revenue:Profit, ~str_replace_all(.x,c("unknown" = "?", "Unknown" = "?")))) %>%  #Her bruges .x for at vælge hver element i across funktionen. Altså, .x = Revenue og dernæst... ... Profit.
   mutate(across(Revenue:Profit, ~na_if(.x, "?"))) %>%
   mutate(across(Revenue:Profit, ~str_remove(.x, fixed("$ ")) %>% as.numeric()))
@@ -320,10 +323,203 @@ profit <- profit %>%
 profit
 
 
+#Validate the calculation for profit. If the difference is between 0 and 1 then recalculate the Profit column. Also ignore any na.
+profit <- profit %>% 
+  mutate(Profit_calc = Revenue - `Product Cost` - `Customer Service Cost`, Diff = abs(Profit - Profit_calc)) %>%  
+  mutate(Profit = if_else(Diff > 0 & Diff <= 1, Profit_calc, Profit, Profit) ) 
+profit %>% filter(Diff == 1, is.na(Profit_calc))  # check
+
+profit
+
+
+
+#Find NA missing values henover flere kolonner og for hver række
+profit <- profit %>% 
+  rowwise() %>% 
+  mutate(ct_na = sum(is.na(c_across(Revenue:Profit)))) %>% 
+  ungroup()
+profit %>% filter(ct_na >= 1)
+
+
+#Recalculate Revenue and Profit if there are one NA value. If there are multiple then remove
+profit <- profit %>% 
+  rowwise() %>% 
+  mutate(c_na = sum(is.na(c_across(Revenue:Profit)))) %>% 
+  mutate(Revenue = if_else(is.na(Revenue) & c_na == 1, Profit + `Product Cost` + `Customer Service Cost`, Revenue, Revenue),
+         `Product Cost` = if_else(is.na(`Product Cost`) & c_na == 1, - Profit + Revenue - `Customer Service Cost`, `Product Cost`), 
+         `Customer Service Cost` = if_else(is.na(`Customer Service Cost`) & c_na == 1, - Profit + Revenue - `Product Cost`, `Customer Service Cost`)) %>% 
+  select(Quarter:Profit)
+
+
+profit
+
+#Check if the calculated profit is equal to the actual profit. If yes then there should be no difference.
+profit %>% 
+  mutate(Profit_calc = Revenue - `Product Cost` - `Customer Service Cost`, Diff = abs(Profit - Profit_calc)) %>%  
+  filter(Diff > 0)
+
+profit
+
+#Find NA values
+
+profit %>% 
+  rowwise() %>% 
+  mutate(c_na = sum(is.na(c_across(Revenue:Profit)))) %>% 
+  filter(c_na > 0)
+
+#Find the two highest profit rows for each quarter.
+profit %>% 
+  group_by(Quarter) %>% 
+  slice_max(Profit,n=2)
+
+
+#Find the two best customers with highest profit in each quarter
+profit %>% 
+  group_by(`Customer ID`) %>% 
+  slice_max(Profit, n=2) %>% 
+  arrange(`Customer ID`)
+
+
+#Find the product line, customer, channel, country and quarter with the highest profit.
+profit %>% 
+  group_by(`Product Line`) %>% 
+  summarise(Profit = sum(Profit)) %>% 
+  slice_max(Profit)
+
+summarise_profit  <- function(data, group_var, summarise_var) {
+  data %>%
+    group_by(across({{ group_var }})) %>% 
+    summarise(across({{ summarise_var }}, sum)) %>% 
+    slice_max(Profit)
+}
+summarise_profit(profit, `Product Line`, Profit)
+#> # A tibble: 1 × 2
+#>   `Product Line`  Profit
+#>   <chr>            <dbl>
+#> 1 Credit Products  31022
+summarise_profit(profit, `Customer ID`, Profit)
+#> # A tibble: 1 × 2
+#>   `Customer ID` Profit
+#>   <chr>          <dbl>
+#> 1 WEM            18942
+# ... repeat
+
+# Using purrr package to get a single tibble (if interested in the purrr package)
+val <- names(profit)[1:5]
+max_profit <- map_df(
+  val, 
+  ~{
+      tmp <- profit %>% 
+        group_by(.data[[.x]]) %>% 
+        summarise(Profit = sum(Profit), .groups = "drop") %>% 
+        slice_max(Profit)
+      tibble(by = .x, 
+        best = as.character(tmp[[1,1]]),
+        profit = tmp[[1,2]] 
+      )
+    } 
+  )
+max_profit 
+  
+  
+
+
+#Same customer ID in multiple countries?
+profit %>% 
+  group_by(`Customer ID`) %>% 
+  distinct(Country) %>% 
+  count(`Customer ID`)
+  
+
+#Sort the data decreasing with respect to profit and next revenue.
+profit
+profit %>% 
+  arrange(desc(Profit),Revenue)
+
+
+
+#Which product line has the highest and lowest total cost
+profit %>% 
+  group_by(`Product Line`) %>% 
+  summarise(cost = sum(`Product Cost` + `Customer Service Cost`)) %>% 
+  # print() %>%   # if want a peek before slicing 
+  slice_max(cost)
+
+profit %>% 
+  group_by(`Product Line`) %>% 
+  summarise(cost = sum(`Product Cost`)) %>% 
+  slice_min(cost)
+
+
+#Assume that customer service cost increases with 5%. How will that affect the profit for each product line?
+profit %>%
+  mutate(cust_cost_new = `Customer Service Cost` * 1.05, 
+         profit_new = Revenue - cust_cost_new - `Product Cost`) %>% 
+  group_by(`Product Line`) %>% 
+  summarise(cust_cost = sum(`Customer Service Cost`), profit = sum(Profit), 
+            cust_cost_new = sum(cust_cost_new), profit_new = sum(profit_new),
+            profit_decrease = profit_new - profit)
 ```
 
 
+```{r}
+library(tidyverse)
+fisheries <- read_csv(system.file("extdata/fisheries.csv", package = "tfa"))
+fisheries
 
+continents <- read_csv(system.file("extdata/continents.csv", package = "tfa"))
+continents
+
+fisheries %>%
+  summarise(across(where(is.numeric), mean, na.rm = TRUE))
+
+#Use a mutating join to add a continent column to the fisheries dataset. Are there some countries which do not belong to a continent? vi bruger her left join for at bibeholde alle kolonner i fisheries så vi kun kan komme til at tilføje kolonner (continents)
+fisheries
+fisheries <- fisheries %>% 
+  left_join(continents)
+
+fisheries
+#Find countries which don't belong to a continent
+fisheries %>% 
+  anti_join(continents)
+
+fisheriesfilter <- fisheries %>% 
+  filter(total > 100000)
+fisheriesfilter
+
+#Se hvilke lande som ikke er i et kontinent efter filtrering
+fisheriesfilter %>% filter(is.na(continent))
+
+
+#Fiks de lande som ikke er i et kontinent. Dvs. tilføj dem til det tættest kontinent
+fisheriesfilter %>% filter(is.na(continent))
+fisheriesfilter <- fisheriesfilter %>%
+  mutate(continent = case_when(
+    country == "Democratic Republic of the Congo" ~ "Africa",
+    country == "Hong Kong"                        ~ "Asia",
+    country == "Myanmar"                          ~ "Asia",
+    TRUE                                          ~ continent
+    )
+  )
+fisheriesfilter %>% filter(is.na(continent))
+
+
+#Add column:
+fisheriesfilter <- fisheriesfilter %>% 
+  mutate(aquaculture_perc = aquaculture / total)
+#Explanation: Andelen som aquaculture udgører af den total produktion virksomheden har haft.
+
+
+#Beregn mean for hvert continent af aquaculture perc. Såvel som min og max.
+fisheriesfilter %>%                 
+  group_by(continent) %>%                      
+  summarize(mean_ap = mean(aquaculture_perc),min=min(aquaculture_perc),max=max(aquaculture_perc)) 
+
+
+
+
+
+```
 
 ## Colophon 
 <!-- Always keep this section for reproducibility -->
