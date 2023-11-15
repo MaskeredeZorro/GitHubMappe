@@ -1,1 +1,32 @@
 unnamed-chunk-1	glimpse	library	starwars
+unnamed-chunk-2	
+unnamed-chunk-3	aes	geom_point	ggplot	height	mass	starwars
+unnamed-chunk-4	aes	geom_point	ggplot	height	labs	mass	starwars
+unnamed-chunk-5	%>%	>	filter	height	mass	name	select	starwars
+unnamed-chunk-6	aes	gender	geom_point	ggplot	height	mass	starwars
+unnamed-chunk-7	aes	birth_year	gender	geom_point	ggplot	height	mass	starwars
+unnamed-chunk-8	
+unnamed-chunk-9	aes	gender	geom_point	ggplot	height	mass	starwars
+unnamed-chunk-10	
+unnamed-chunk-11	~	aes	facet_grid	geom_point	ggplot	height	labs	mass	starwars
+unnamed-chunk-12	~	aes	facet_grid	geom_point	ggplot	height	mass	starwars
+unnamed-chunk-13	~	aes	facet_wrap	geom_point	ggplot	height	mass	starwars
+unnamed-chunk-14	
+unnamed-chunk-15	aes	geom_histogram	ggplot	height	starwars
+unnamed-chunk-16	aes	geom_density	ggplot	height	starwars
+unnamed-chunk-17	aes	gender	geom_bar	ggplot	starwars
+unnamed-chunk-18	aes	gender	geom_bar	ggplot	hair_color	starwars
+unnamed-chunk-19	%>%	c	fct_other	hair_color	mutate
+unnamed-chunk-20	
+unnamed-chunk-21	aes	coord_flip	gender	geom_bar	ggplot	hair_color2	labs	starwars
+unnamed-chunk-22	aes	gender	geom_boxplot	ggplot	height	starwars
+unnamed-chunk-23	aes	gender	geom_point	ggplot	height	starwars
+unnamed-chunk-24	aes	gender	geom_violin	ggplot	height	starwars
+unnamed-chunk-25	set.seed
+unnamed-chunk-26	aes	gender	geom_jitter	ggplot	height	starwars
+unnamed-chunk-27	%>%	group_by	height	mean	species	starwars	summarise	T
+unnamed-chunk-28	%>%	aes	avg	dat	geom_col	ggplot	species
+unnamed-chunk-29	%>%	aes	avg	dat	element_text	geom_col	ggplot	labs	reorder	species	theme
+unnamed-chunk-30	%>%	<	filter	mass	starwars
+unnamed-chunk-31	aes	geom_point	ggplot	height	mass	starwars_without_jabba
+unnamed-chunk-32	aes	geom_point	geom_smooth	ggplot	height	mass	starwars_without_jabba

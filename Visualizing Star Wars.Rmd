@@ -37,7 +37,7 @@ glimpse(starwars)
 A row for each person in the movies. For instance the row for Luke Skywalker is:
 
 ```{r, out.width="70%", echo=FALSE}
-knitr::include_graphics("img/luke-skywalker.png")
+#knitr::include_graphics("img/luke-skywalker.png")
 ```
 
 ## Scatterplot of mass vs. height
@@ -69,12 +69,12 @@ ggplot(data = starwars, mapping = aes(x = height, y = mass)) +
 * Who is the not so tall but really chubby character?
 
 ```{r}
-starwars %>% 
+dat <- starwars %>% 
   filter(mass > 500) %>% 
   select(name, height, mass)
 ```
 
-
+The fat guy is `r dat$name[1]`
 
 ## Aesthetics
 
