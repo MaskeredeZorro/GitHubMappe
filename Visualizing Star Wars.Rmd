@@ -104,7 +104,7 @@ ggplot(data = starwars,
 Jabba is very old. What about species? We use species as color aesthetic:
 
 ```{r, eval=FALSE}
-Your turn - Finish the code
+#Your turn - Finish the code
 ggplot(data = starwars,
        mapping = aes(x=height, y = mass, color = species, size = birth_year)) +
   geom_point()
@@ -121,7 +121,7 @@ ggplot(data = starwars, mapping = aes(x = height, y = mass, color = gender)) +
 A plot of mass given height with hair color as color aesthetic and using fixed `shape = 0`:
 
 ```{r, eval=FALSE}
-Your turn: finish the code
+#Your turn: finish the code
 ggplot(data = starwars, mapping = aes(x = height, y = mass, color = hair_color)) +
   geom_point(shape=2)
 ```
