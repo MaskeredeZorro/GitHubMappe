@@ -104,10 +104,10 @@ ggplot(data = starwars,
 Jabba is very old. What about species? We use species as color aesthetic:
 
 ```{r, eval=FALSE}
-# Your turn - Finish the code
-# ggplot(data = starwars, 
-#        mapping = ___) +
-#   geom_point()
+Your turn - Finish the code
+ggplot(data = starwars,
+       mapping = aes(x=height, y = mass, color = species, size = birth_year)) +
+  geom_point()
 ```
 
 
@@ -121,9 +121,9 @@ ggplot(data = starwars, mapping = aes(x = height, y = mass, color = gender)) +
 A plot of mass given height with hair color as color aesthetic and using fixed `shape = 0`:
 
 ```{r, eval=FALSE}
-# Your turn: finish the code
-# ggplot(data = starwars, mapping = aes(x = height, y = mass, ___)) +
-#   geom_point(___) 
+Your turn: finish the code
+ggplot(data = starwars, mapping = aes(x = height, y = mass, color = hair_color)) +
+  geom_point(shape=2)
 ```
 
 **Summary**
@@ -162,7 +162,7 @@ ggplot(data = starwars, mapping = aes(x = height, y = mass)) +
   geom_point() +
   facet_grid(gender ~ .)
 ```
-
+Each subset will display a column of genders with each row representing a gender. This is because the ~ is after gender (the first argument in facet grid). If it was before, then it would make a column for each.
 
 ```{r out.width="95%", warning=FALSE}
 ggplot(data = starwars, mapping = aes(x = height, y = mass)) +
@@ -173,17 +173,19 @@ ggplot(data = starwars, mapping = aes(x = height, y = mass)) +
 Let us facet species:
 
 ```{r}
-# Your turn - Finish the code
+ggplot(data = starwars, mapping = aes(x = height, y = mass)) +
+  geom_point() +
+  facet_wrap(~ species)
 ```
 
 
 **Summary**
 
 - `facet_grid()`:
-    - 2d grid
+    - 2d grid can be made by facet grid. 
     - `rows ~ cols`
     - use `.` for no split
-- `facet_wrap()`: 1d ribbon wrapped into 2d
+- `facet_wrap()`: 1d ribbon wrapped into 2d. To make them square.
 
 
 
@@ -259,11 +261,11 @@ starwars <- starwars %>%
 The segmented bar plot now becomes
 
 ```{r out.width="70%"}
-# Your turn - Finish the code
-# ggplot(data = starwars, 
-#        mapping = aes(x = gender, fill = ___)) +
-#   geom_bar() +
-#   coord_flip()
+#Your turn - Finish the code
+ggplot(data = starwars,
+       mapping = aes(x = gender, fill = hair_color2)) +
+  geom_bar() +
+  coord_flip()
 ```
 
 Try to run the following:
@@ -275,6 +277,8 @@ ggplot(data = starwars,
   coord_flip() +
   labs(y = "proportion")
 ```
+Position = "fill" gør at andelene bliver udregnet for hver gruppering. Ikke repræsentativ ift at sammenligne om der er flere med den ene hårfarve mænd end den anden. Men rigtig god til at visualisere forholdet mellem køn og hårfarve.
+
 
 Which bar plot is a more useful representation for visualizing the relationship between gender and hair color?
 
@@ -282,7 +286,7 @@ Which bar plot is a more useful representation for visualizing the relationship 
 
 ## Visualizing relationships between numerical and categorical data
 
-### Side-by-side box plots
+### Side-by-side box plotskayle
 
 ```{r out.width="75%", warning=FALSE}
 ggplot(data = starwars, mapping = aes(y = height, x = gender)) +
