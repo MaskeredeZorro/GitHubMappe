@@ -367,7 +367,7 @@ ggplot(starwars_without_jabba, aes(x = height, y = mass)) +
   geom_point()
 ```
 
-Let us try to add some lines
+Let us try to add some linesd
 
 ```{r}
 ggplot(starwars_without_jabba, aes(x = height, y = mass)) +
