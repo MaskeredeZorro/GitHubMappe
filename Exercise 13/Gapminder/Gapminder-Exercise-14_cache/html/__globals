@@ -1,0 +1,31 @@
+unnamed-chunk-2	&	%>%	==	c	country	filter	gapminder	infant_mortality	select	year
+unnamed-chunk-3	::	%>%	==	as.character	bind_cols	c	comparison	country	filter	gapminder	infant_mortality	inner_join	mutate	names<-	rep	select	seq	slice	tibble	year
+unnamed-chunk-4	%>%	==	aes	continent	fertility	filter	gapminder	geom_point	ggplot	life_expectancy	year
+unnamed-chunk-5	%>%	~	aes	c	continent	facet_grid	fertility	filter	gapminder	geom_point	ggplot	life_expectancy	year
+unnamed-chunk-6	&	%>%	~	aes	c	continent	coord_cartesian	facet_wrap	fertility	filter	gapminder	geom_point	ggplot	life_expectancy	year
+unnamed-chunk-7	%>%	==	aes	continent	fertility	filter	gapminder	geom_point	ggplot	life_expectancy	year
+fertility-time-series-plot-points	%>%	==	aes	country	fertility	filter	gapminder	geom_point	ggplot	year
+unnamed-chunk-8	
+unnamed-chunk-9	c
+unnamed-chunk-10	
+unnamed-chunk-11	%>%	gdp	mutate	population
+dollars-per-day-distribution	!	&	%>%	==	aes	dollars_per_day	filter	gapminder	gdp	geom_histogram	ggplot	is.na	year
+unnamed-chunk-12	
+unnamed-chunk-13	%>%	==	filter	gapminder	max	min	past_year	population	summarize	year
+population-histogram-log10	%>%	==	aes	filter	gapminder	geom_histogram	ggplot	log10	past_year	population	year
+unnamed-chunk-14	
+unnamed-chunk-15	%>%	~	as_tibble	case_when	mutate
+unnamed-chunk-16	
+unnamed-chunk-17	
+unnamed-chunk-18	!	&	%>%	==	c	country	dollars_per_day	filter	gapminder	intersect	is.na	pull	year
+unnamed-chunk-19	
+unnamed-chunk-20	
+income-smooth-density-by-year	&	%>%	aes	country	country_list	dollars_per_day	facet_grid	filter	gapminder	geom_density	ggplot	scale_x_continuous	vars	year	years
+unnamed-chunk-21	&	%>%	==	country	country_list	filter	gapminder	group	group_by	ifelse	mutate	n	past_year	spread	summarize	year
+income-smooth-density-by-year-west-v-developing	&	%>%	aes	country	country_list	dollars_per_day	facet_grid	filter	gapminder	geom_density	ggplot	group	scale_x_continuous	vars	year	years
+income-smooth-density-counts	..count..	&	%>%	aes	c	country	country_list	dollars_per_day	facet_grid	filter	gapminder	geom_density	ggplot	group	scale_x_continuous	vars	year	years
+unnamed-chunk-22	
+unnamed-chunk-23	&	%>%	country	country_list	filter	group_by	mutate	population	sum	ungroup	year	years
+unnamed-chunk-24	
+unnamed-chunk-25	::	$
+unnamed-chunk-26	::	%>%	$	date	list	loadedversion	package	select	session	source
