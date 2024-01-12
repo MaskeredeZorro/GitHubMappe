@@ -439,7 +439,7 @@ What is happening in the following chunk?
 hotels %>%
   mutate(little_ones = children + babies) %>%
   count(hotel, little_ones) %>%
-  mutate(prop = n / sum(n))
+  mutate(prop = n / sum(n)) %>% 
 ```
 
 

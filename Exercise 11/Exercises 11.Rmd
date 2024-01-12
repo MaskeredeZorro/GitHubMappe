@@ -182,7 +182,7 @@ library(ggraph)
 library(tidygraph)
 edges <- tibble(from = res$seq[1:4], to = res$seq[2:5])
 graph <- as_tbl_graph(edges) 
-ggraph(graph, layout = 'linear') + 
+ggraph(graph, layout = 'linear') +
   geom_edge_link(arrow = arrow(length = unit(4, 'mm')), 
                  end_cap = circle(4, 'mm'), 
                  start_cap  = circle(4, 'mm')) + 

@@ -168,6 +168,7 @@ We modify the startup costs and run `better`:
 ```{r}
 startup_costs <- c(27, 28, 55, 120, 26)
 res <- better(startup_costs, setup_costs)
+res
 ```
 
 The job sequence now becomes `r res$seq` with a cost of `r res$cost`.

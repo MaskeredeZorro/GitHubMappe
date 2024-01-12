@@ -21,15 +21,7 @@ knitr::opts_chunk$set(
   )
 ```
 
-<!-- Some css for the comments (delete) -->
-```{css, echo=FALSE}
-.comment {
-  color: gold;
-  border-style: dashed;
-  border-width: thin;
-  padding: 10px;
-}
-```
+
 
 
 In this exercise, we will demonstrate how relatively simple ggplot2 code can create insightful and aesthetically pleasing plots. As motivation we will create plots that help us better understand trends in world health and economics. 
@@ -315,12 +307,12 @@ The exploratory data analysis above has revealed two characteristics about avera
   11) Make a boxplot (`geom_boxplot`) of `dollars_per_day` (y-axis) versus `group` (x-axis) from 1970 using a log2 scale. Also add a the data using `geom_point()`.
   
 ```{r}
-# gapminder %>% 
-#   filter(year == past_year & !is.na(gdp)) %>%
-#   ggplot(aes(group, dollars_per_day)) +
-#   geom____() +
-#   scale_y_continuous(trans = "log2") + 
-#   geom____()
+ gapminder %>% 
+   filter(year == past_year & !is.na(gdp)) %>%
+   ggplot(aes(group, dollars_per_day)) +
+   geom_boxplot() +
+   scale_y_continuous(trans = "log2") + 
+   geom_point()
 ``` 
 
 

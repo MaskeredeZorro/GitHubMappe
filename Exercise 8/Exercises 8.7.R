@@ -7,6 +7,7 @@ library(tidyverse)
 
 #Spørgsmål 1:
 head(mtcars)
+mtcars
 mtcars %>% select(cyl, gear, hp, mpg)
 
 #Spørgmsål 2:
@@ -44,18 +45,20 @@ read_file("../test1.txt")
 
 
 #Exercise 8.7.4: Vectors
-set.seed(123)
+set.seed(200)
 v <- sample.int(100,30)
-v
+v <- 
 sum(v)
 mean(v)
 sd(v)
 v[c(1,6,4,15)]
+v
 v[v>50]
 v[v>75 | v<=25]
 v[v==43]
 v[is.na(v)]
 which(v>75 | v<=25)
+sum(v[c(1,6,4,15)])
 
 
 
@@ -73,14 +76,16 @@ rowSums(m1, na.rm=TRUE)
 colSums(m2, na.rm=TRUE)
 
 #Spørgsmål 3:
-rbind(m1, c(1,2,3,4))
-
+m1
+m1 <- rbind(m1, c(1,2,3,4))
+m1
 #Spørgsmål 4:
-rbind(c(1,2,3,4), m1)
+m1 <- rbind(c(1,2,3,4), m1)
 m1
 
 #Spørgsmål 5:
-cbind(m3, c(1,2,3,4))
+m3
+m3 <- cbind(m3, c(1,2,3,4))
 m3
 
 #Spørgsmål 6:

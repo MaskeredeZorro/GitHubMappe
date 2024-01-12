@@ -14,6 +14,8 @@ output:
     toc: true
     toc_depth: 2
 date: "`r Sys.Date()`"
+editor_options: 
+  chunk_output_type: console
 ---
 
 
@@ -194,15 +196,10 @@ ggraph(graph, layout = 'linear') +
 
 ```{r Covid opgave 13.5.7}
 library(tidyverse)
+library(tfa)
 dat <- read_csv(system.file("extdata/covid.csv", package = "tfa"))
 
 #Spørgsmål 1: Create a visualization showing the number of cases for each date in Denmark with the following features:
-dat
-dat %>% 
-  filter(country == "Denmark") %>%
-  select(cases) %>%
-
-dat
 
 dat %>% 
   filter(country == "Denmark", !is.na(cases)) %>%
